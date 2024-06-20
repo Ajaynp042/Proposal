@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposals Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
+
+</head>
+
+<body>
+
+    <nav>
+
+
+
+    </nav>
+
+    <main>
+        <header>
+            <h1 id="openFormBtn">Proposals</h1>
+        </header>
+
+        <section class="proposals-list">
+            <h2>Submitted Proposals</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>PROPOSAL NAME</th>
+                        <th>SUMMARY</th>
+                        <th>INVENTORY STATUS</th>
+                        <th>REACH</th>
+                        <!-- <th>CLIENT NAME</th>
+                        <th>DURATION</th>
+                        <th>RUNS FOR</th>
+                        <th>SLOT DURATION</th>
+                        <th>CITIES</th>
+                        <th>PROPERTY TYPE</th>
+                        <th>PLAN</th>
+                        <th>ADVERTISE TAG</th>
+                        <th>FILE NAME</th>
+                        <th>MEDIA</th>
+                        <th>CREATIVE INSTRUCTIONS</th> -->
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="proposals">
+                    <!-- Proposals will be displayed here -->
+                </tbody>
+            </table>
+        </section>
+
+        <div id="proposalModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="formStep1">
+                    <h2>Submit Your Proposal - Step 1</h2>
+                    <form id="proposalFormStep1">
+                        <label for="name">Proposal Name:</label>
+                        <input type="text" id="name" name="name" required>
+
+                        <label for="summary">Summary:</label>
+                        <textarea id="summary" name="summary" rows="4" required></textarea>
+
+                        <label for="inventoryStatus">Inventory Status:</label>
+                        <input type="text" id="inventoryStatus" name="inventoryStatus" required>
+
+                        <label for="reach">Reach:</label>
+                        <input type="number" id="reach" name="reach" required>
+
+                        <button type="button" class="steps" id="nextStepBtn">Next</button>
+                    </form>
+                </div>
+                <div id="formStep2" style="display: none;">
+                    <h2>Submit Your Proposal - Step 2</h2>
+                    <form id="proposalFormStep2">
+                        <label for="clientName">Client Name:</label>
+                        <input type="text" id="clientName" name="clientName" required>
+
+                        <label for="startOn">Duration: Start On (DD/MM/YYYY):</label>
+                        <input type="date" id="startOn" name="startOn" required>
+
+                        <label for="runsFor">Runs For (Days):</label>
+                        <input type="number" id="runsFor" name="runsFor" required>
+
+                        <label for="slotDuration">Slot Duration (Seconds):</label>
+                        <input type="number" id="slotDuration" name="slotDuration" required>
+
+                        <label for="cities">Cities:</label>
+                        <div id="citiesContainer">
+                            <select name="city" id="city" multiple>
+                                <option value="1">Gandhinagar</option>
+                                <option value="2">Ahmedabad</option>
+                                <option value="3">Surat</option>
+                            </select>
+                            <button type="button" class="steps" id="addCityBtn">Add City</button>
+                        </div>
+                        <ul id="citiesList"></ul>
+
+                        <label for="propertyType">Property Type:</label>
+                        <select id="propertyType" name="propertyType" required>
+                            <option value="Residential">Residential</option>
+                            <option value="Commercial">Commercial</option>
+                        </select>
+
+                        <label for="plan">Plan:</label>
+                        <select id="plan" name="plan" required>
+                            <option value="Basic">Basic</option>
+                            <option value="Premium">Premium</option>
+                        </select>
+
+                        <label for="advertisementTag">Advertisement Tag:</label>
+                        <input type="text" id="advertisementTag" name="advertisementTag" required>
+
+                        <button type="button" class="steps" id="nextStepBtn2">Next</button>
+                    </form>
+                </div>
+                <div id="formStep3" style="display: none;">
+                    <h2>Submit Your Proposal - Step 3</h2>
+                    <form id="proposalFormStep3">
+                        <label for="fileName">File Name:</label>
+                        <input type="text" id="fileName" name="fileName" required>
+
+                        <label for="media">Media:</label>
+                        <input type="file" id="media" name="media" required>
+
+                        <label for="creativeInstructions">Creative Instructions:</label>
+                        <textarea id="creativeInstructions" name="creativeInstructions" rows="4" required></textarea>
+
+                        <button type="submit" class="steps">Submit Proposal</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+    <script src="scripts.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: #333;
+        }
+        
+        nav ul li {
+            display: inline;
+            margin-right: 10px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+        }
+        
+        nav ul li a:hover {
+            background-color: #575757;
+        }
+        
+        main {
+            margin: 20px;
+        }
+        
+        header h1 {
+            text-align: left;
+            cursor: pointer;
+        }
+        
+        section {
+            margin: 2em auto;
+            padding: 1em;
+            max-width: 963px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #333;
+        }
+        
+        label {
+            display: block;
+            margin: 0.5em 0 0.2em;
+        }
+        
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.5em;
+            margin-bottom: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.7em 1.5em;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        
+        .steps:hover {
+            background-color: #246827;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+        
+        th,
+        td {
+            padding: 0.5em;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+        }
+        
+        .actions button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+        
+        .actions button:hover {
+            background-color: #e53935;
+        }
+        /* Modal Styles */
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
+    <script>
+        // Open the proposal modal
+        document.getElementById('openFormBtn').addEventListener('click', function() {
+            document.getElementById('proposalModal').style.display = 'block';
+        });
+
+        // Close the proposal modal
+        document.getElementsByClassName('close')[0].addEventListener('click', function() {
+            document.getElementById('proposalModal').style.display = 'none';
+        });
+
+        // Add city to the list
+        document.getElementById('addCityBtn').addEventListener('click', function() {
+            const cityInput = document.getElementById('city');
+            const cityName = cityInput.value.trim();
+            if (cityName !== '') {
+                const cityList = document.getElementById('citiesList');
+                const li = document.createElement('li');
+                li.textContent = cityName;
+                cityList.appendChild(li);
+                cityInput.value = '';
+            }
+        });
+
+        // Form navigation
+        document.getElementById('nextStepBtn').addEventListener('click', function() {
+            document.getElementById('formStep1').style.display = 'none';
+            document.getElementById('formStep2').style.display = 'block';
+        });
+
+        document.getElementById('nextStepBtn2').addEventListener('click', function() {
+            document.getElementById('formStep2').style.display = 'none';
+            document.getElementById('formStep3').style.display = 'block';
+        });
+
+        new MultiSelectTag('city') // id
+
+        // Submit proposal form
+        document.getElementById('proposalFormStep3').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const summary = document.getElementById('summary').value;
+            const inventoryStatus = document.getElementById('inventoryStatus').value;
+            const reach = document.getElementById('reach').value;
+
+            const clientName = document.getElementById('clientName').value;
+            const startOn = document.getElementById('startOn').value;
+            const runsFor = document.getElementById('runsFor').value;
+            const slotDuration = document.getElementById('slotDuration').value;
+            const cities = Array.from(document.getElementById('citiesList').children).map(cityItem => cityItem.firstChild.textContent);
+            const propertyType = document.getElementById('propertyType').value;
+            const plan = document.getElementById('plan').value;
+            const advertisementTag = document.getElementById('advertisementTag').value;
+
+            const fileName = document.getElementById('fileName').value;
+            const media = document.getElementById('media').files[0].name;
+            const creativeInstructions = document.getElementById('creativeInstructions').value;
+
+            const proposalRow = document.createElement('tr');
+            proposalRow.innerHTML = `
+        <td>${name}</td>
+        <td>${summary}</td>
+        <td>${inventoryStatus}</td>
+        <td>${reach}</td>
+       
+        <td class="actions">
+            <button onclick="discardProposal(this)">Discard</button>
+        </td>
+    `;
+
+            document.getElementById('proposals').appendChild(proposalRow);
+
+            document.getElementById('proposalModal').style.display = 'none';
+            document.getElementById('proposalFormStep1').reset();
+            document.getElementById('proposalFormStep2').reset();
+            document.getElementById('proposalFormStep3').reset();
+            document.getElementById('formStep1').style.display = 'block';
+            document.getElementById('formStep2').style.display = 'none';
+            document.getElementById('formStep3').style.display = 'none';
+            document.getElementById('citiesList').innerHTML = '';
+        });
+    </script>
+</body>
+
+</html>
